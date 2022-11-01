@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.lecture.Mapper09">
+	<!-- preparedStatement 쿼리의 ?는 #{파라미터명} -->
+	<select id="getCustomerNameId" resultType="string">
+		select
+		CustomerName
+		from
+		Customers
+		where
+		CustomerID = #{id}
+	</select>
+
+	<select id="getEmployeeFirstNameId" resultType="string">
+		select firstName
+		from Employees where EmployeeID = #{id};
+	</select>
+
+	<select id="getCustomerNameByCityAndCountry" resultType="string">
+		select
+		CustomerName from Customers where city = #{city} and country
+		=#{country}
+	</select>
+
+	<select id="getSupplierNameByCityAndCountry" resultType="string">
+		select
+		SupplierName from Suppliers where city=#{city} and country=#{country};
+	</select>
+
+	<select id="getContactName" resultType="string">
+		SELECT
+		ContactName
+		FROM
+		Customers
+		WHERE
+		CustomerName = #{name}
+		AND Country = #{country}
+	</select>
+
+	<select id="getSupplierContactName" resultType="string">
+		select
+		ContactName from Suppliers
+		where SupplierName = #{name}
+		and Country =
+		#{country}
+	</select>
+
+	<select id="getProductName" resultType="string">
+		SELECT
+		ProductName
+		FROM
+		Products
+		WHERE
+		CategoryId = #{arg1.categoryId}
+		AND Price >= #{arg2.price}
+	</select>
+</mapper>

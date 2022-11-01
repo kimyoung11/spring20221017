@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.lecture.Mapper08">
+	<select id="getProductName" resultType="string">
+		select
+		ProductName
+		From
+		Products
+		Where Price &lt;= 20.00
+	</select>
+
+	<!-- USE CDATA -->
+	<select id="getProductName2" resultType="string">
+<![CDATA[
+		select 
+			ProductName
+		From
+			Products
+		Where Price <= 20.00
+]]>
+	</select>
+
+	<select id="getEmployeeFirstName" resultType="string">
+		SELECT
+		FirstName
+		FROM
+		Employees
+		WHERE
+		BirthDate &lt; '1960-01-01'
+	</select>
+
+</mapper>
