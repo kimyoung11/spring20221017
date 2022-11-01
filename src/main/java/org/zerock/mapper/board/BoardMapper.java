@@ -5,15 +5,20 @@ import java.util.List;
 import org.zerock.domain.board.BoardDto;
 
 public interface BoardMapper {
-	public int insert(BoardDto board);
 
-	public List<BoardDto> list(int offset, int records);
-
-	public int countAll();
 	
-	public BoardDto select(int id);
+	int insert(BoardDto board);
 
-	public int update(BoardDto board);
+	List<BoardDto> list(int offset, int records,String type, String keyword);
 
-	public int remove(int id);
+	BoardDto select(int id);
+
+	int update(BoardDto board);
+
+	int delete(int id);
+
+	int countAll(String type,String keyword);
+
+	int countKeyword();
+
 }
