@@ -24,11 +24,11 @@
 					</div>
 					<div class="mb-3">
 						<label for="" class="form-label">본문</label>
-						<textarea rows="5" class="form-control" name="content"></textarea>
+						<textarea rows="5" class="form-control" name="content" required="required"></textarea>
 					</div>
 					<div class="mb-3">
 						<label for="" class="form-label">작성자</label>
-						<input type="text" class="form-control" name="writer">
+						<input type="text" class="form-control" name="writer" required="required">
 					</div>
 					
 					<input class="btn btn-primary" type="submit" value="등록">
