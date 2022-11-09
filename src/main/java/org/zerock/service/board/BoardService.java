@@ -92,14 +92,29 @@ public class BoardService {
 	}
 
 	public int update(BoardDto board) {		
+		//File table에 해당 파일명 지우기
+		
+		//File table에 파일명 추가
+		
+		//저장소에 실제 파일 추가
+		
 		return boardMapper.update(board);	
 	}
 	
 	@Transactional
 	public int remove(int id) {
+		//저장소 파일 지우기
+		boardMapper.deleteFileByBoardId(id);
+		//파일 record 지우기
+		String path = "C:\\Users\\user\\Desktop\\study\\upload\\prj1\\board\\" + id;
+		File folder = new File(path);
+		File[] listFiles = folder.listFiles();
+		for(File file : listFiles) {
+			file.delete();
+		}
+		folder.delete();
 		//게시물 댓글 지우기
 		replyMapper.deleteByBoardId(id);
-		
 		//int a = 3 / 0 ;
 		//게시물 지우기
 		return boardMapper.delete(id);

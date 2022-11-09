@@ -107,5 +107,10 @@
 		DELETE FROM Board
 		WHERE id = #{id}
 	</delete>
+	
+	<delete id="deleteFileByBoardId">
+		DELETE FROM File
+		WHERE boardId = #{id}
+	</delete>
 
 </mapper>
