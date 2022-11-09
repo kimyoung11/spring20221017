@@ -23,87 +23,91 @@
 	<div class="container-md">
 		<div class="row">
 			<div class="col">
-			
-	
+
+
 				<h1>
 					${board.id }번 게시물
-					 
+
 					<c:url value="/board/modify" var="modifyLink">
 						<c:param name="id" value="${board.id }"></c:param>
 					</c:url>
-					<a class="btn btn-warning" href="${modifyLink }">
-						<i class="fa-solid fa-pen-to-square"></i>
+					<a class="btn btn-warning" href="${modifyLink }"> <i
+						class="fa-solid fa-pen-to-square"></i>
 					</a>
 				</h1>
-			
+
 				<div class="mb-3">
-					<label class="form-label">
-						제목 
-					</label>
-					<input class="form-control" type="text" value="${board.title }" readonly>
-				</div>	
-				
+					<label class="form-label"> 제목 </label> <input class="form-control"
+						type="text" value="${board.title }" readonly>
+				</div>
+
 				<div class="mb-3">
-					<label for="" class="form-label">
-					본문 
-					</label>
+					<label for="" class="form-label"> 본문 </label>
 					<textarea rows="5" class="form-control" readonly>${board.content }</textarea>
 				</div>
-				
+
 				<%-- 이미지 출력 --%>
 				<div>
-					<img src="/image/${board.id }/${board.fileName}" alt="">
+					<c:forEach items="${board.fileName }" var="name">
+						<div>
+							<img class="img-fluid img-thumbnail"
+								src="/image/${board.id }/${name}" alt="">
+						</div>
+					</c:forEach>
 				</div>
-				
+
 				<div class="mb-3">
-					<label for="" class="form-label">
-						작성자 
-					</label>
-					<input class="form-control" type="text" value="${board.writer }" readonly>
+					<label for="" class="form-label"> 작성자 </label> <input
+						class="form-control" type="text" value="${board.writer }" readonly>
 				</div>
-				
+
 				<div class="mb-3">
-					<label for="" class="form-label">
-						작성일시 
-					</label>
-					<input class="form-control" type="datetime-local" value="${board.inserted }" readonly>
+					<label for="" class="form-label"> 작성일시 </label> <input
+						class="form-control" type="datetime-local"
+						value="${board.inserted }" readonly>
 				</div>
-	
-	
+
+
 			</div>
 		</div>
 	</div>
-	
+
 	<hr>
-	
+
 	<%-- 댓글 메시지 토스트 --%>
-	<div id="replyMessageToast" class="toast align-items-center top-0 start-50 translate-middle-x position-fixed" role="alert" aria-live="assertive" aria-atomic="true">
-	  <div class="d-flex">
-	    <div id="replyMessage1" class="toast-body">
-	      Hello, world! This is a toast message.
-	    </div>
-	    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-	  </div>
+	<div id="replyMessageToast"
+		class="toast align-items-center top-0 start-50 translate-middle-x position-fixed"
+		role="alert" aria-live="assertive" aria-atomic="true">
+		<div class="d-flex">
+			<div id="replyMessage1" class="toast-body">Hello, world! This
+				is a toast message.</div>
+			<button type="button" class="btn-close me-2 m-auto"
+				data-bs-dismiss="toast" aria-label="Close"></button>
+		</div>
 	</div>
-	
+
 	<div class="container-md">
 		<div class="row">
 			<div class="col">
-				<h3><i class="fa-solid fa-comments"></i></h3>
+				<h3>
+					<i class="fa-solid fa-comments"></i>
+				</h3>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col">
 				<%-- 댓글 작성 --%>
 				<input type="hidden" id="boardId" value="${board.id }">
-				
+
 				<div class="input-group">
 					<input type="text" class="form-control" id="replyInput1">
-					<button class="btn btn-outline-secondary" id="replySendButton1"><i class="fa-solid fa-reply"></i></button>
+					<button class="btn btn-outline-secondary" id="replySendButton1">
+						<i class="fa-solid fa-reply"></i>
+					</button>
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row mt-3">
 			<div class="col">
 				<div class="list-group" id="replyListContainer">
@@ -112,50 +116,59 @@
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<%-- 댓글 삭제 확인 모달 --%>
 	<!-- Modal -->
-	<div class="modal fade" id="removeReplyConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 삭제 확인</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        댓글을 삭제하시겠습니까?
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="button" data-bs-dismiss="modal" id="removeConfirmModalSubmitButton" class="btn btn-danger">삭제</button>
-	      </div>
-	    </div>
-	  </div>
+	<div class="modal fade" id="removeReplyConfirmModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">댓글 삭제 확인</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">댓글을 삭제하시겠습니까?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<button type="button" data-bs-dismiss="modal"
+						id="removeConfirmModalSubmitButton" class="btn btn-danger">삭제</button>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+
 	<%-- 댓글 수정 모달 --%>
 	<!-- Modal -->
-	<div class="modal fade" id="modifyReplyFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5">댓글 수정 양식</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        <input type="text" class="form-control" id="modifyReplyInput">
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="button" data-bs-dismiss="modal" id="modifyFormModalSubmitButton" class="btn btn-primary">수정</button>
-	      </div>
-	    </div>
-	  </div>
+	<div class="modal fade" id="modifyReplyFormModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5">댓글 수정 양식</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input type="text" class="form-control" id="modifyReplyInput">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<button type="button" data-bs-dismiss="modal"
+						id="modifyFormModalSubmitButton" class="btn btn-primary">수정</button>
+				</div>
+			</div>
+		</div>
 	</div>
-	
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-<script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+		crossorigin="anonymous"></script>
+	<script>
 const ctx = "${pageContext.request.contextPath}";
 
 listReply();
