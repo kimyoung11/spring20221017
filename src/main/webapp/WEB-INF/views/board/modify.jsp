@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ page import="java.net.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,12 +41,22 @@
 					<%-- 이미지 출력 --%>
 					<div class="mb-3">
 						<c:forEach items="${board.fileName }" var="name">
-							<div>
-								<img class="img-fluid img-thumbnail"
-									src="/image/${board.id }/${name}" alt="">
+							<div class="row">
+								<div class="col-2">
+									<%-- 삭제 여부 체크박스 --%>
+									삭제
+									<input type="checkbox" name="removeFiles" value="${name }">
+								</div>
+								<div class="col-10">
+									<div>
+										<img class="img-fluid img-thumbnail"
+								src="${imgUrl }/${board.id }/${URLEncoder.encode(name, 'utf-8')}" alt="">
+									</div>
+								</div>
 							</div>
-						</c:forEach>
+						</c:forEach>		
 					</div>
+					
 					<div class="mb-3">
 						<label for="" class="form-label">파일 추가</label>
 						<input multiple="multiple" type="file" accept="image/*" class="form-control" name="files">

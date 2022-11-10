@@ -20,7 +20,7 @@
 				<form action="" method="post" enctype="multipart/form-data">
 					<div class="mb-3">
 						<label for="" class="form-label">제목</label>
-						<input type="text" class="form-control" name="title">
+						<input type="text" class="form-control" name="title" required="required">
 					</div>
 					<div class="mb-3">
 						<label for="" class="form-label">본문</label>
@@ -45,6 +45,9 @@
 	
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
+	
+</script>
 </body>
 </html>
 

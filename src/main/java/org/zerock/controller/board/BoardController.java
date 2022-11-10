@@ -45,8 +45,7 @@ public class BoardController {
 		// 3. Controller의 메소드 argument type : MultipartFile 
 		
 		// request param 수집/가공
-		
-		if(!board.getTitle().isEmpty()) { // 아이디 있을때,
+		if(!board.getTitle().isBlank()) { // 제목 있을때,
 			int cnt = service.register(board, files);
 			//System.out.println(file.getOriginalFilename());
 			rttr.addFlashAttribute("message1", "새 게시물이 등록되었습니다.");
@@ -131,9 +130,10 @@ public class BoardController {
 	
 	@PostMapping("modify")
 	public String modify(BoardDto board, 
-			MultipartFile[] files,
+			@RequestParam("files") MultipartFile[] files,
+			@RequestParam(name = "removeFiles", required = false) List<String> removeFiles,
 			RedirectAttributes rttr) {
-		int cnt = service.update(board);
+		int cnt = service.update(board,files,removeFiles);
 		
 //		if(files != null) {
 //			System.out.println(files.length);
