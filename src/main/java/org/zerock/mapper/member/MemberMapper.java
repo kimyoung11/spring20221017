@@ -12,4 +12,8 @@ public interface MemberMapper {
 
 	public MemberDto selectById(String id);
 
+	public int update(MemberDto member);
+
+	public int deleteById(String id);
+
 }
