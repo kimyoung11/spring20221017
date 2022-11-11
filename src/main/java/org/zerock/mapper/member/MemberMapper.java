@@ -10,4 +10,6 @@ public interface MemberMapper {
 
 	public List<MemberDto> selectAll();
 
+	public MemberDto selectById(String id);
+
 }

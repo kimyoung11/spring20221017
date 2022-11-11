@@ -18,4 +18,17 @@
 		FROM Member
 		ORDER BY id
 	</select>
+	
+	<select id="selectById" resultType="org.zerock.domain.member.MemberDto">
+	SELECT 
+		id,
+		password,
+		email,
+		inserted
+	FROM
+		Member
+	WHERE
+		id = #{id}
+	
+	</select>
 </mapper>

@@ -39,7 +39,11 @@
 					<tbody>
 						<c:forEach items="${memberList }" var="member">
 							<tr>
-								<td id="memberLink">${member.id }</td>
+								<td>
+									<c:url value="/member/info" var="infoLink">
+										<c:param name="id" value="${member.id }"></c:param>
+									</c:url> <a href="${infoLink }"> ${member.id } </a>
+									</td>
 								<td>${member.password }</td>
 								<td>${member.email }</td>
 								<td>${member.inserted }</td>

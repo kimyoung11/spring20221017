@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.board.BoardDto;
 import org.zerock.domain.member.MemberDto;
 import org.zerock.service.member.MemberService;
 
@@ -37,6 +39,11 @@ public class MemberController {
 	@GetMapping("list")
 	public void list(Model model) {
 		model.addAttribute("memberList",service.list());
+	}
+	
+	@GetMapping("info") 
+	public void get(String id, Model model) {
+		model.addAttribute("member",service.getById(id));
 	}
 	
 }
