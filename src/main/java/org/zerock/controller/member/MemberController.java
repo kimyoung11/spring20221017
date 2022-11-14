@@ -1,13 +1,18 @@
 package org.zerock.controller.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.board.BoardDto;
 import org.zerock.domain.member.MemberDto;
@@ -19,40 +24,61 @@ public class MemberController {
 
 	@Autowired
 	private MemberService service;
-	
+
+	@GetMapping("existId/{id}")
+	@ResponseBody
+	public Map<String, Object> existId(@PathVariable String id) {
+		Map<String, Object> map = new HashMap<>();
+		
+		MemberDto member = service.getById(id);
+
+		if (member == null) {
+			map.put("status", "not exist");
+			map.put("message", "사용가능한 아이디입니다.");
+		} else {
+			map.put("status", "exist");
+			map.put("message", "이미 존재하는 아이디입니다.");
+		}
+		
+		return map;
+	}
+
 	@GetMapping("signup")
 	public void signup() {
-		
+
 	}
-	
+
 	@PostMapping("signup")
-	public String signup(@ModelAttribute MemberDto member, RedirectAttributes rttr) {
+	public String signup(MemberDto member, RedirectAttributes rttr) {
 		System.out.println(member);
-		
+
 		int cnt = service.insert(member);
 
-		rttr.addFlashAttribute("message1", "회원가입 되었습니다.");
+		// 가입 잘되면
+		rttr.addFlashAttribute("message", "회원가입 되었습니다.");
 		return "redirect:/board/list";
-		
 	}
-	
+
 	@GetMapping("list")
 	public void list(Model model) {
-		model.addAttribute("memberList",service.list());
+		model.addAttribute("memberList", service.list());
 	}
-	
-	@GetMapping({"info", "modify"}) 
-	public void get(String id, Model model) {
-		model.addAttribute("member",service.getById(id));
+
+	@GetMapping({ "info", "modify" })
+	public void info(String id, Model model) {
+
+		model.addAttribute("member", service.getById(id));
 	}
-	
+
 	@PostMapping("modify")
 	public String modify(MemberDto member, String oldPassword, RedirectAttributes rttr) {
+		MemberDto oldmember = service.getById(member.getId());
+
 		rttr.addAttribute("id", member.getId());
-		
-		if(member.getPassword().equals(oldPassword)) {
+		if (oldmember.getPassword().equals(oldPassword)) {
+			// 기존 암호가 맞으면 회원 정보 수정
 			int cnt = service.modify(member);
-			
+
 			if (cnt == 1) {
 				rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다.");
 				return "redirect:/member/info";
@@ -60,20 +86,29 @@ public class MemberController {
 				rttr.addFlashAttribute("message", "회원 정보가 수정되지 않았습니다.");
 				return "redirect:/member/modify";
 			}
-
-		}
-		else {
+		} else {
 			rttr.addFlashAttribute("message", "암호가 일치하지 않습니다.");
 			return "redirect:/member/modify";
 		}
-		
+
 	}
-	
+
 	@PostMapping("remove")
-	public String remove(String id) {
-		service.remove(id);
-		return "redirect:/member/list";
+	public String remove(String id, String oldPassword, RedirectAttributes rttr) {
+		MemberDto oldmember = service.getById(id);
+
+		if (oldmember.getPassword().equals(oldPassword)) {
+			int cnt = service.remove(id);
+
+			rttr.addFlashAttribute("message", "회원 탈퇴하였습니다.");
+
+			return "redirect:/board/list";
+
+		} else {
+			rttr.addAttribute("id", id);
+			rttr.addFlashAttribute("message", "암호가 일치하지 않습니다.");
+			return "redirect:/member/modify";
+		}
+
 	}
 }
-
-
