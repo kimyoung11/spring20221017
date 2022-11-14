@@ -16,4 +16,7 @@ public interface MemberMapper {
 
 	public int deleteById(String id);
 
+	public MemberDto selectByEmail(String email);
+
+
 }
